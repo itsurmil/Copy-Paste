@@ -13,7 +13,7 @@
 	<div class="row">
 		<tr th:each="fieldValue : ${fieldValueList}">
 		    <div class="col-sm-2" style="width: 15.666667%;">
-				<div class="field-shape"  th:data-value="${fieldValue.getId}" th:onclick="copyFieldValue(this.getAttribute('data-value'));">
+				<div class="field-shape"  th:data-value="${fieldValue.getFieldValue}" th:onclick="copyFieldValue(this.getAttribute('data-value'));">
 					<p class="field-text" th:classappend="${fieldValue.getId}" th:text="${fieldValue.getFieldName}">
 				</div>
 				<button th:onclick="deleteFieldValue(this.getAttribute('data-fieldId') , this.getAttribute('data-folderId') );" 
@@ -23,15 +23,10 @@
 		    	th:data-fiedlId="${fieldValue.getId}" th:data-fieldName="${fieldValue.getFieldName()}" th:data-fieldValue="${fieldValue.getFieldValue()}"  
 		    	 type="button" class="custom-button edit-button" style="color: #f0f2f3; background-color: #1c1b40;">Edit</button>
 		    </div>
-		    <div class="colorDiv hide" id="firstColorObject">
-			    <h3 style="display: none;" th:id="${fieldValue.getId}" th:text="${fieldValue.getFieldValue()}" class="colorCode" value="123"></h3>
-			    <div style="opacity:0">
-			        <input type="text" id="copyText"/>
-			    </div>
-			</div>
 		</tr>
 	</div>
 </div>
+<input class='copyText' tabindex='-1' aria-hidden='true' style="margin-left: -200px;">
 <button style="margin-left: 1000px;" class="open-button" onclick="openForm()">Add Field</button>
 
 <div style="margin-left: 900px;" class="form-popup" id="myForm">
