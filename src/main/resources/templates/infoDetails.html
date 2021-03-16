@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="ISO-8859-1">
+<link th:href = "@{/css/main.css}" rel="stylesheet">
+<script th:src = "@{/js/main.js}" type="text/javascript"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+<div th:if="${fieldValueList.size()} > 0">
+	<div class="row">
+		<tr th:each="fieldValue : ${fieldValueList}">
+		    <div class="col-sm-2" style="width: 15.666667%;">
+				<div class="field-shape"  th:data-value="${fieldValue.getId}" th:onclick="copyFieldValue(this.getAttribute('data-value'));">
+					<p class="field-text" th:classappend="${fieldValue.getId}" th:text="${fieldValue.getFieldName}">
+				</div>
+				<button th:onclick="deleteFieldValue(this.getAttribute('data-fieldId') , this.getAttribute('data-folderId') );" 
+		    	th:data-fieldId="${fieldValue.getId}" th:data-folderId="${folderId}"  
+		    	 type="button" class="custom-button" style="color: #f0f2f3; background-color: #1c1b40;">Delete</button>
+		    	 <button th:onclick="editFieldValue(this.getAttribute('data-fiedlId') ,this.getAttribute('data-fieldName') ,this.getAttribute('data-fieldValue') );" 
+		    	th:data-fiedlId="${fieldValue.getId}" th:data-fieldName="${fieldValue.getFieldName()}" th:data-fieldValue="${fieldValue.getFieldValue()}"  
+		    	 type="button" class="custom-button edit-button" style="color: #f0f2f3; background-color: #1c1b40;">Edit</button>
+		    </div>
+		    <div class="colorDiv hide" id="firstColorObject">
+			    <h3 style="display: none;" th:id="${fieldValue.getId}" th:text="${fieldValue.getFieldValue()}" class="colorCode" value="123"></h3>
+			    <div style="opacity:0">
+			        <input type="text" id="copyText"/>
+			    </div>
+			</div>
+		</tr>
+	</div>
+</div>
+<button style="margin-left: 1000px;" class="open-button" onclick="openForm()">Add Field</button>
+
+<div style="margin-left: 900px;" class="form-popup" id="myForm">
+  <form action="/add-info-data" class="form-container">
+  	<label for="text"><b>Folder Id</b></label>
+    <input th:value="${folderId}" type="text" placeholder="Field Name" name="folderId" required readonly="readonly">
+  
+    <label for="text"><b>Field Name</b></label>
+    <input type="text" placeholder="Field Name" name="fieldName" required>
+
+    <label for="text"><b>Value</b></label>
+    <input type="text" placeholder="Field Value" name="fieldValue" required>
+
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+<div class="main">
+	<div style="margin-left: 900px;" class="form-popup" id="editFieldForm">
+	  <form action="/update-field" class="form-container">
+	  	
+	  	<label for="text"><b>Field Id</b></label>
+	    <input class="modalFieldId" type="text" placeholder="Field Id" name="fieldId" required readonly="readonly">
+	  	
+	    <label for="text"><b>Field Name</b></label>
+	    <input class="modalFieldName" type="text" placeholder="Field Name" name="fieldName" required>
+	    
+	     <label for="text"><b>Field Value</b></label>
+	     <input class="modalFieldValue" type="text" placeholder="Field Value" name="fieldValue" required>
+	
+	    <button type="submit" class="btn">Submit</button>
+	    <button type="button" class="btn cancel" onclick="closeEditFieldForm()">Close</button>
+	  </form>
+	</div>
+</div>
+</body>
+</html> 

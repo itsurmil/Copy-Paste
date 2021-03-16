@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="ISO-8859-1">
+<link th:href = "@{/css/main.css}" rel="stylesheet">
+<script th:src = "@{/js/main.js}" type="text/javascript"></script>
+</head>
+<body>
+<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<div th:if="${mainFolderList.size()} > 0">
+	<div class="row">
+		<tr th:each="mainFolder : ${mainFolderList}">
+		    <div class="col-sm-2" style="width: 15.666667%;">
+		   		<div class="shape" th:onclick="|goToFieldValuePage('${mainFolder.getId()}')|">
+					<p class="folder-text" th:classappend="${mainFolder.getId()}" th:text="${mainFolder.getFolderName()}">
+				</div>
+				<button th:onclick="deleteFolderValue(this.getAttribute('data-folderId'));" 
+		    		th:data-folderId="${mainFolder.getId()}"   
+		    		 type="button" class="custom-button ">Delete</button>
+		    	 <button th:onclick="editFolderValue(this.getAttribute('data-folderId') ,this.getAttribute('data-folderName') );" 
+		    		th:data-folderId="${mainFolder.getId()}" th:data-folderName="${mainFolder.getFolderName()}"  
+		    		 type="button" class="custom-button edit-button">Edit</button>
+		    </div>
+		</tr>
+	</div>
+</div>
+<button style="margin-left: 1000px;" class="open-button" onclick="openForm()">Add Folder</button>
+
+<div style="margin-left: 900px;" class="form-popup" id="myForm">
+  <form action="/add-new-folder" class="form-container">
+  
+    <label for="text"><b>Folder Name</b></label>
+    <input type="text" placeholder="Folder Name" name="folderName" required>
+
+    <button type="submit" class="btn">Submit</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<div class="main">
+	<div style="margin-left: 900px;" class="form-popup" id="editFolderForm">
+	  <form action="/update-folder" class="form-container">
+	  	
+	  	<label for="text"><b>Folder Id</b></label>
+	    <input class="modalFolderId" type="text" placeholder="Field Name" name="folderId" required readonly="readonly">
+	  	
+	    <label for="text"><b>Folder Name</b></label>
+	    <input class="modalFolderName" type="text" placeholder="Folder Name" name="folderName" required>
+	
+	    <button type="submit" class="btn">Submit</button>
+	    <button type="button" class="btn cancel" onclick="closeEditFolderForm()">Close</button>
+	  </form>
+	</div>
+</div>
+</body>
+</html> 
